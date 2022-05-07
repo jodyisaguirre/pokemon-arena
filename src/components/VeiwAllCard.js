@@ -14,15 +14,17 @@ import {Fragment, useEffect, useState} from "react";
 
 export default function ViewAllCard(props){
     const {
-        name,
         attack,
         defense,
-        type,
+        disableSelect,
         index,
-        url,
+        lastSlide,
+        name,
         nextSlide,
         previousSlide,
-        lastSlide
+        sendToArena,
+        type,
+        url,
     } = props
     return(
         <Fragment>
@@ -45,15 +47,14 @@ export default function ViewAllCard(props){
                 <CardActions>
                     <BasicButton
                         name={"Previous"}
-                        // buttonAction={handlePreviousSlide}
                         color={"success"}
                         disabled={index === 0}
                         onClick={previousSlide}
                     />
-
                     <BasicButton
                         name={"Select For Fight"}
-                        // buttonAction={(e)=>{handleSelect(e,index);handleSlideSelect()}}
+                        onClick={(e) => sendToArena(e,index)}
+                        disabled ={disableSelect}
                     />
                     <BasicButton
                         name={"Delete"}

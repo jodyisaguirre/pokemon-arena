@@ -1,6 +1,9 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useEffect, useRef, useState} from 'react'
 import ViewAllCard from "../components/VeiwAllCard";
-
+import ArenaCard from "../components/ArenaCard";
+import SearchBar from "../components/SearchBar";
+import DropDown from "../components/DropDown";
+import BasicButton from "../components/BasicButton";
 
 
 const initialData =[
@@ -32,17 +35,64 @@ const initialData =[
         defense:9,
         url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbTalGlnaQgm0h3c4IICDmaRe9315mGUuj3w&usqp=CAU"
     },
+    {
+        name:"ponyta",
+        type:"fire",
+        attack : 6,
+        defense:9,
+        url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQENMBjQDBkxfpIzD5tIkT03Xkl-zChzyaeng&usqp=CAU"
+    },
+    // {
+    //     name:"nullimon",
+    //     type: null,
+    //     attack : 6,
+    //     defense:9,
+    //     url:"data:image/png;base64,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"
+    // },
+
 ]
 
-
-function ArenaCard() {
-    return null;
-}
 
 export default function ViewAllPage(props){
 
     const [index, setIndex]=useState(0)
     const [arena,setArena]= useState([])
+    const [roster,setRoster]=useState([])
+    const [searchTerm,setSearchTerm]=useState("")
+    const [typeSearch, setTypeSearch]=useState("")
+    const [dropDownOptions, setDropDownOption]=useState([])
+    const [winner,setWinner]= useState("")
+    const [isFighting, setIsFighting]= useState(false)
+
+
+
+    useEffect(()=>{
+        setRoster(initialData)
+        const uniqueType = [...new Set(initialData.map(pokemon => pokemon.type).filter(type => type !== null))]
+        const addAllOption = ["all",...uniqueType]
+        console.log(addAllOption)
+        setDropDownOption(addAllOption)
+    },[])
+
+    useEffect(()=>{
+        if (searchTerm && searchTerm !== ""){
+            const filteredPokemon = roster.filter(pokemon => {
+                return pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+            })
+            setRoster(filteredPokemon)
+            setIndex(0)
+        }
+        else if(typeSearch && typeSearch !== "all"){
+            const filteredPokemon = initialData.filter(pokemon => {
+                return pokemon.type.toLowerCase().includes(typeSearch.toLowerCase())
+            })
+            setRoster(filteredPokemon)
+            setIndex(0)
+        }
+        else{
+        setRoster(initialData)
+        }
+    },[searchTerm,typeSearch])
 
     const nextSlide = () =>{
        setIndex(index + 1)
@@ -51,25 +101,110 @@ export default function ViewAllPage(props){
         setIndex(index - 1)
     }
 
-    const handleSelectForArena = () => {
+    const handleSelectForArena = (e,index) => {
 
+        setArena([...arena,roster[index]])
+        roster.splice(index, 1)
+        setIndex(0)
+        setTypeSearch("all")
+        setSearchTerm("")
     }
+    const handleReturnToRoster = (e,index) => {
+        setRoster([...roster,arena[index]])
+        arena.splice(index, 1)
+    }
+    function searchHandler(input){
+        setSearchTerm(input)
+    }
+    function dropDownValue(input){
+        setTypeSearch(input)
+    }
+    function setToFalse (){
+        setIsFighting(false)
+    }
+    function handleFight(){
+        setIsFighting(true)
+        setTimeout(setToFalse,2300)
+        const winner = []
+        arena.map((fighter) =>{
+            winner.push(fighter.attack+fighter.defense)
+        })
+        if(winner[0]>winner[1]){
+            setWinner(arena[0].name)
+        }
+        else{
+            setWinner(arena[1].name)
+        }
+    }
+
 
     return(
         <Fragment>
-            <ViewAllCard
-                index={index}
-                name={initialData[index].name}
-                type={initialData[index].type}
-                attack={initialData[index].attack}
-                defense={initialData[index].defense}
-                url={initialData[index].url}
-                nextSlide={nextSlide}
-                previousSlide={previousSlide}
-                lastSlide={initialData.length-1}
-            />
-            <ArenaCard/>
-            </Fragment>
+            <div>
+                <SearchBar
+                    searchTerm={searchTerm}
+                    onChange={searchHandler}
+                    placeHolder={"Search For Fighter"}
+                />
+                <DropDown
+                    dropDownOptions={dropDownOptions}
+                    dropDownValue={dropDownValue}
+                />
+            </div>
+            <div>
+                <ViewAllCard
+                    index={index}
+                    name={roster[index]?.name}
+                    type={roster[index]?.type}
+                    attack={roster[index]?.attack}
+                    defense={roster[index]?.defense}
+                    url={roster[index]?.url}
+                    nextSlide={nextSlide}
+                    previousSlide={previousSlide}
+                    sendToArena={handleSelectForArena}
+                    lastSlide={roster?.length-1}
+                    disableSelect={arena.length === 2}
+                />
+            </div>
+            <div className={"Arena"}>
+                {
+                    arena?.map((pokemon,index) =>
+                            <ArenaCard
+                                index={index}
+                                name={pokemon.name}
+                                type={pokemon.type}
+                                attack={pokemon.attack}
+                                defense={pokemon.defense}
+                                url={pokemon.url}
+                                returnToRoster={handleReturnToRoster}
+                            />
+                    )
+                }
+              <div>
+                  {(arena?.length >= 2)
+                      &&
+                      <div className={"buttonContainer"} >
+                          {(!isFighting && !winner)&&
+                              <BasicButton
+                                  className={"buttonColor"}
+                                  name={"Lets Get it on"}
+                                  color={"success"}
+                                  onClick={handleFight}
+                              />}
+                          {(isFighting) &&
+                              <img src="https://media2.giphy.com/media/HZpCCbcWc0a3u/giphy.gif?cid=ecf05e47vbxelk7bxwnf0bu0rs0qxq28amnvjkszqjpzeksj&rid=giphy.gif&ct=g"/>
+                          }
+
+                      </div>
+                  }
+                  {(winner && !isFighting)&&
+                      <div className={"buttonContainer"}>
+                          The Winner is : {winner}
+                      </div>
+                  }
+              </div>
+            </div>
+        </Fragment>
     )
 
 }
