@@ -4,6 +4,7 @@ import ArenaCard from "../components/ArenaCard";
 import SearchBar from "../components/SearchBar";
 import DropDown from "../components/DropDown";
 import BasicButton from "../components/BasicButton";
+import {Box, Modal, Typography} from "@mui/material";
 
 
 const initialData =[
@@ -42,16 +43,19 @@ const initialData =[
         defense:9,
         url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQENMBjQDBkxfpIzD5tIkT03Xkl-zChzyaeng&usqp=CAU"
     },
-    // {
-    //     name:"nullimon",
-    //     type: null,
-    //     attack : 6,
-    //     defense:9,
-    //     url:"data:image/png;base64,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"
-    // },
-
 ]
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 export default function ViewAllPage(props){
 
@@ -63,6 +67,10 @@ export default function ViewAllPage(props){
     const [dropDownOptions, setDropDownOption]=useState([])
     const [winner,setWinner]= useState("")
     const [isFighting, setIsFighting]= useState(false)
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
 
 
 
@@ -70,7 +78,6 @@ export default function ViewAllPage(props){
         setRoster(initialData)
         const uniqueType = [...new Set(initialData.map(pokemon => pokemon.type).filter(type => type !== null))]
         const addAllOption = ["all",...uniqueType]
-        console.log(addAllOption)
         setDropDownOption(addAllOption)
     },[])
 
@@ -106,8 +113,6 @@ export default function ViewAllPage(props){
         setArena([...arena,roster[index]])
         roster.splice(index, 1)
         setIndex(0)
-        setTypeSearch("all")
-        setSearchTerm("")
     }
     const handleReturnToRoster = (e,index) => {
         setRoster([...roster,arena[index]])
@@ -121,6 +126,8 @@ export default function ViewAllPage(props){
     }
     function setToFalse (){
         setIsFighting(false)
+        handleOpen()
+
     }
     function handleFight(){
         setIsFighting(true)
@@ -152,24 +159,32 @@ export default function ViewAllPage(props){
                 />
             </div>
             <div>
-                <ViewAllCard
-                    index={index}
-                    name={roster[index]?.name}
-                    type={roster[index]?.type}
-                    attack={roster[index]?.attack}
-                    defense={roster[index]?.defense}
-                    url={roster[index]?.url}
-                    nextSlide={nextSlide}
-                    previousSlide={previousSlide}
-                    sendToArena={handleSelectForArena}
-                    lastSlide={roster?.length-1}
-                    disableSelect={arena.length === 2}
-                />
+                {(roster.length > 0)
+                    ?
+                    <ViewAllCard
+                        index={index}
+                        name={roster[index]?.name}
+                        type={roster[index]?.type}
+                        attack={roster[index]?.attack}
+                        defense={roster[index]?.defense}
+                        url={roster[index]?.url}
+                        nextSlide={nextSlide}
+                        previousSlide={previousSlide}
+                        sendToArena={handleSelectForArena}
+                        lastSlide={roster?.length - 1}
+                        disableSelect={arena.length === 2}
+                    />
+                    :
+                    <h3>
+                        No PokeMon Results Available
+                    </h3>
+                }
             </div>
             <div className={"Arena"}>
                 {
                     arena?.map((pokemon,index) =>
                             <ArenaCard
+                                key={index}
                                 index={index}
                                 name={pokemon.name}
                                 type={pokemon.type}
@@ -180,29 +195,41 @@ export default function ViewAllPage(props){
                             />
                     )
                 }
-              <div>
-                  {(arena?.length >= 2)
-                      &&
-                      <div className={"buttonContainer"} >
-                          {(!isFighting && !winner)&&
-                              <BasicButton
-                                  className={"buttonColor"}
-                                  name={"Lets Get it on"}
-                                  color={"success"}
-                                  onClick={handleFight}
-                              />}
-                          {(isFighting) &&
-                              <img src="https://media2.giphy.com/media/HZpCCbcWc0a3u/giphy.gif?cid=ecf05e47vbxelk7bxwnf0bu0rs0qxq28amnvjkszqjpzeksj&rid=giphy.gif&ct=g"/>
-                          }
+            </div>
+            <div>
+                {(arena?.length >= 2)
+                    &&
+                    <div className={"buttonContainer"} >
+                        {(!isFighting && !winner)&&
+                            <BasicButton
+                                className={"buttonColor"}
+                                name={"Lets Get it on"}
+                                color={"success"}
+                                onClick={handleFight}
+                            />}
+                        {(isFighting) &&
+                            <img src="https://media2.giphy.com/media/HZpCCbcWc0a3u/giphy.gif?cid=ecf05e47vbxelk7bxwnf0bu0rs0qxq28amnvjkszqjpzeksj&rid=giphy.gif&ct=g"/>
+                        }
 
-                      </div>
-                  }
-                  {(winner && !isFighting)&&
-                      <div className={"buttonContainer"}>
-                          The Winner is : {winner}
-                      </div>
-                  }
-              </div>
+                    </div>
+                }
+            </div>
+            <div>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Winner!!!
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            {winner.toUpperCase()}
+                        </Typography>
+                    </Box>
+                </Modal>
             </div>
         </Fragment>
     )

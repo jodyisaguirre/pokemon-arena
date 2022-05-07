@@ -14,18 +14,18 @@ import {Fragment, useEffect, useState} from "react";
 
 export default function ViewAllCard(props){
     const {
-        name,
         attack,
         defense,
-        type,
         index,
-        url,
+        name,
+        type,
         returnToRoster,
+        url,
     } = props
     return(
         <Fragment>
             <Card className={"CardContainer"}>
-                <CardContent >
+                <CardContent>
                     <Typography variant="h5" component="div">
                         {name}
                     </Typography>
