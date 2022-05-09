@@ -29,21 +29,21 @@
  display: flex;
   flex-direction: row;
 }
+
 .PokeBallCard{
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url("https://www.pngitem.com/pimgs/m/107-1075267_open-pokeball-png-pokemon-ball-open-png-transparent.png");
   background-repeat: no-repeat;
-  height: 800px;
+  background-position: 50% 0;
+  height: 150vh;
 }
 .PokeBall{
   margin-top: 5%;
   width: 20%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 .input{
   background-color: grey;

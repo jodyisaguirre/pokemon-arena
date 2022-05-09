@@ -1,5 +1,4 @@
 import './App.css';
-import ViewAllPage from "./pages/ViewAllPage";
 import {BrowserRouter as Router , Routes, Route, Link} from "react-router-dom";
 import PokeDexPage from "./pages/PokeDexPage";
 import ArenaPage from "./pages/ArenaPage";
