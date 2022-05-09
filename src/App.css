@@ -5,7 +5,6 @@
   align-items: center;
   flex-direction: column;
 }
-
 .ViewAllCard{
   background: #ffffff;
   display: inline-block;
@@ -19,17 +18,28 @@
   z-index: 0;
   position: relative;
 }
-
-
 .CardContainer{
-  width: 100%
-}
+  width: 40vw;
+  background-color: red;
+  margin-left: 4%;
+  margin-bottom:3.5%;
 
+}
 .Arena{
  display: flex;
   flex-direction: row;
 }
-
+.Pokedex{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("http://gran4u.xtgem.com/Pokedex.png");
+}
 .PokeBallCard{
   display: flex;
   justify-content: center;
@@ -37,7 +47,7 @@
   background-image: url("https://www.pngitem.com/pimgs/m/107-1075267_open-pokeball-png-pokemon-ball-open-png-transparent.png");
   background-repeat: no-repeat;
   background-position: 50% 0;
-  height: 150vh;
+  height: 100vh;
 }
 .PokeBall{
   margin-top: 5%;
@@ -47,4 +57,24 @@
 }
 .input{
   background-color: grey;
+}
+
+.SearchBar{
+  margin-top: 5%;
+  height: 2.5em;
+  width: 15em;
+  margin-left:15%;
+}
+.DropDown{
+  margin-top: 1%;
+  height: 2.5em;
+  width: 15.5em;
+  margin-bottom: 1%;
+  margin-left:15%;
+}
+
+.PokeStadium{
+  background-image: url("https://nintendoeverything.com/wp-content/uploads/pokemon-stadium-1.jpg");
+  background-repeat: no-repeat;
+  height: 100vh;
 }

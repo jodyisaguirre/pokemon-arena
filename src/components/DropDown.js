@@ -9,7 +9,7 @@ export default function DropDown(props){
     }
 
     return(
-        <select ref={selectElement} onChange={handleDropDownValue} >
+        <select ref={selectElement}  className={"DropDown"} onChange={handleDropDownValue} >
             {
                 dropDownOptions.map(type =>  <option key={type}>{type}</option>)
             }

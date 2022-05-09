@@ -12,8 +12,7 @@ export default function SearchBar(props){
 
     return(
         <div>
-            search: <input type="text" name="searchTerm"   ref={inputElement} value={searchTerm} onChange={searchValue} placeholder={placeHolder}></input>
-
+           <input type="text" className={"SearchBar"} name="searchTerm"   ref={inputElement} value={searchTerm} onChange={searchValue} placeholder={placeHolder}></input>
         </div>
     )
 }

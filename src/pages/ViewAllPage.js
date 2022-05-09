@@ -75,36 +75,36 @@ export default function ViewAllPage(props){
     const handleClose = () => setOpen(false);
 
     useEffect(()=>{
-       dispatch(fetchPokemonInitialData())
-
+        dispatch(fetchPokemonInitialData())
     },[])
 
     useEffect(()=>{
         const uniqueType = [...new Set(pokemon.map(p => p.type).filter(type => type !== null))]
         const addAllOption = ["all",...uniqueType]
         setDropDownOption(addAllOption)
-
-    },[pokemon])
-
-    useEffect(()=>{
-        if (searchTerm && searchTerm !== ""){
-            const filteredPokemon = roster.filter(pokemon => {
-                return pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-            })
-            setRoster(filteredPokemon)
-            setIndex(0)
-        }
-        else if(typeSearch && typeSearch !== "all"){
-            const filteredPokemon = pokemon.filter(pokemon => {
-                return pokemon.type.toLowerCase().includes(typeSearch.toLowerCase())
-            })
-            setRoster(filteredPokemon)
-            setIndex(0)
-        }
-        else{
         setRoster(pokemon)
-        }
-    },[searchTerm,typeSearch])
+    },[pokemon])
+    console.log(roster)
+    //
+    // useEffect(()=>{
+    //     if (searchTerm && searchTerm !== ""){
+    //         const filteredPokemon = pokemon.filter(p => {
+    //             return p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    //         })
+    //         setRoster(filteredPokemon)
+    //         setIndex(0)
+    //     }
+    //     else if(typeSearch && typeSearch !== "all"){
+    //         const filteredPokemon = pokemon.filter(pokemon => {
+    //             return pokemon.type.toLowerCase().includes(typeSearch.toLowerCase())
+    //         })
+    //         setRoster(filteredPokemon)
+    //         setIndex(0)
+    //     }
+    //     else{
+    //     setRoster(pokemon)
+    //     }
+    // },[searchTerm,typeSearch])
 
     const nextSlide = () =>{
        setIndex(index + 1)
@@ -124,6 +124,7 @@ export default function ViewAllPage(props){
         arena.splice(index, 1)
     }
     function searchHandler(input){
+        console.log(input)
         setSearchTerm(input)
     }
     function dropDownValue(input){
@@ -148,8 +149,6 @@ export default function ViewAllPage(props){
             setWinner(arena[1].name)
         }
     }
-
-
     return(
         <Fragment>
             <div>
@@ -164,20 +163,20 @@ export default function ViewAllPage(props){
                 />
             </div>
             <div>
-                {(pokemon.length > 0)
+                {(roster.length > 0)
                     ?
                     <ViewAllCard
                         index={index}
-                        name={pokemon[index]?.name}
-                        type={pokemon[index]?.type}
-                        attack={pokemon[index]?.attack}
-                        defense={pokemon[index]?.defense}
-                        url={pokemon[index]?.url}
+                        name={roster[index]?.name}
+                        type={roster[index]?.type}
+                        attack={roster[index]?.attack}
+                        defense={roster[index]?.defense}
+                        url={roster[index]?.url}
                         nextSlide={nextSlide}
                         previousSlide={previousSlide}
                         sendToArena={handleSelectForArena}
-                        lastSlide={pokemon?.length - 1}
-                        disableSelect={arena.length === 2}
+                        lastSlide={roster?.length - 1}
+                        disableSelect={roster.length === 2}
                     />
                     :
                     <h3>

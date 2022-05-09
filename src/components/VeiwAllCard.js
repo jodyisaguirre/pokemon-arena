@@ -52,7 +52,7 @@ export default function ViewAllCard(props){
                         onClick={previousSlide}
                     />
                     <BasicButton
-                        name={"Select For Fight"}
+                        name={"I Choose You"}
                         onClick={(e) => sendToArena(e,index)}
                         disabled ={disableSelect}
                     />

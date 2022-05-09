@@ -4,6 +4,8 @@ import ViewAllPage from "./ViewAllPage";
 
 export default function PokeDexPage(){
     return(
-        <ViewAllPage/>
+        <div className={"Pokedex"}>
+            <ViewAllPage/>
+        </div>
     )
 }

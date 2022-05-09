@@ -8,8 +8,7 @@ export default function ArenaPage(){
 
 
     return(
-        <div>
-            Welcome to the thunder dome
+        <div className={"PokeStadium"}>
         </div>
     )
 }
