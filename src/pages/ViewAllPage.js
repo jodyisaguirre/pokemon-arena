@@ -84,27 +84,43 @@ export default function ViewAllPage(props){
         setDropDownOption(addAllOption)
         setRoster(pokemon)
     },[pokemon])
-    console.log(roster)
-    //
-    // useEffect(()=>{
-    //     if (searchTerm && searchTerm !== ""){
-    //         const filteredPokemon = pokemon.filter(p => {
-    //             return p.name.toLowerCase().includes(searchTerm.toLowerCase())
-    //         })
-    //         setRoster(filteredPokemon)
-    //         setIndex(0)
-    //     }
-    //     else if(typeSearch && typeSearch !== "all"){
-    //         const filteredPokemon = pokemon.filter(pokemon => {
-    //             return pokemon.type.toLowerCase().includes(typeSearch.toLowerCase())
-    //         })
-    //         setRoster(filteredPokemon)
-    //         setIndex(0)
-    //     }
-    //     else{
-    //     setRoster(pokemon)
-    //     }
-    // },[searchTerm,typeSearch])
+
+
+    useEffect(()=>{
+        console.log((typeSearch && searchTerm === ""))
+        console.log(typeSearch,searchTerm)
+        if (typeSearch && typeSearch !== "all" && searchTerm && searchTerm !== ""){
+            console.log('1st')
+            const filteredPokemon = pokemon.filter(p => {
+                const searchTermCondition = p.name.toLowerCase().includes(searchTerm.toLowerCase())
+                const typeSearchCondition = p.type.toLowerCase().includes(typeSearch.toLowerCase())
+                return searchTermCondition && typeSearchCondition
+            })
+            setRoster(filteredPokemon)
+            setIndex(0)
+        }
+        else if (searchTerm && searchTerm !== ""){
+            console.log('2nd')
+
+            const filteredPokemon = pokemon.filter(p => {
+                return p.name.toLowerCase().includes(searchTerm.toLowerCase())
+            })
+            setRoster(filteredPokemon)
+            setIndex(0)
+        }
+        else if((typeSearch && typeSearch !== "all") || (typeSearch !== "all" && searchTerm === "")){
+            console.log('3nd')
+            const filteredPokemon = pokemon.filter(p => {
+                return p.type.toLowerCase().includes(typeSearch.toLowerCase())
+            })
+            setRoster(filteredPokemon)
+            setIndex(0)
+        }
+        else{
+            console.log('4th')
+            setRoster(pokemon)
+        }
+    },[searchTerm,typeSearch])
 
     const nextSlide = () =>{
        setIndex(index + 1)
@@ -114,7 +130,6 @@ export default function ViewAllPage(props){
     }
 
     const handleSelectForArena = (e,index) => {
-
         setArena([...arena,roster[index]])
         roster.splice(index, 1)
         setIndex(0)
@@ -124,7 +139,6 @@ export default function ViewAllPage(props){
         arena.splice(index, 1)
     }
     function searchHandler(input){
-        console.log(input)
         setSearchTerm(input)
     }
     function dropDownValue(input){
@@ -133,7 +147,6 @@ export default function ViewAllPage(props){
     function setToFalse (){
         setIsFighting(false)
         handleOpen()
-
     }
     function handleFight(){
         setIsFighting(true)
@@ -237,5 +250,4 @@ export default function ViewAllPage(props){
             </div>
         </Fragment>
     )
-
 }
