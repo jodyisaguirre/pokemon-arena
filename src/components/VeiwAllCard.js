@@ -46,14 +46,14 @@ export default function ViewAllCard(props){
                 </CardContent>
                 <CardActions>
                     <BasicButton
-                        name={"Previous"}
+                        name={"<"}
                         color={"success"}
                         disabled={index === 0}
                         onClick={previousSlide}
                     />
                     <BasicButton
                         name={"I Choose You"}
-                        onClick={(e) => sendToArena(e,index)}
+                        onClick={() => sendToArena(index)}
                         disabled ={disableSelect}
                     />
                     <BasicButton
@@ -61,7 +61,7 @@ export default function ViewAllCard(props){
                         color={"error"}
                     />
                     <BasicButton
-                        name={"Next"}
+                        name={">"}
                         onClick={nextSlide}
                         color={"success"}
                         disabled={index === lastSlide}

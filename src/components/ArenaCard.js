@@ -44,7 +44,7 @@ export default function ViewAllCard(props){
                     <BasicButton
                         name={"Return"}
                         color={"success"}
-                        onClick={(e) => {returnToRoster(e,index)}}
+                        onClick={() => {returnToRoster(index)}}
                     />
                 </CardActions>
             </Card>

@@ -31,6 +31,17 @@ export default function reducer(state={}, action) {
                 ...state,
                 roster: state.roster.filter(pokemon => pokemon.name !== action.payload.name)
             }
+        case TYPES.ADD_TO_ARENA:
+            return {
+                ...state,
+                arena: [...state.arena,action.payload]
+            }
+        case TYPES.REMOVE_FROM_ARENA:
+            console.log(action)
+            return {
+                ...state,
+                arena: state.arena.filter(pokemon => pokemon.name !== action.payload.name)
+            }
         default:
             return state
     }

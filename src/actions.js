@@ -58,18 +58,3 @@ export const fetchPokemonData = (payload) => {
 export const fetchPokemonInitialData = () =>{
     return fetchPokemonData(generateInitialData())
 }
-
-
-export const addToArena = (payload) => {
-    return {
-        type: 'arena',
-        payload
-    }
-}
-
-export const addToRoster = (payload) => {
-    return {
-        type: 'roster',
-        payload
-    }
-}
